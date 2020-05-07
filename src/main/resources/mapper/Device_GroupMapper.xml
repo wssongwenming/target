@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.Device_GroupMapper" >
+  <resultMap id="BaseResultMap" type="com.mmall.model.Device_Group" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="group_index" property="groupIndex" jdbcType="INTEGER" />
+    <result column="target_id" property="targetId" jdbcType="INTEGER" />
+    <result column="camera_id" property="cameraId" jdbcType="INTEGER" />
+    <result column="display_id" property="displayId" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, group_index, target_id, camera_id, display_id, number, status, memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from device_group
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from device_group
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.model.Device_Group" >
+    insert into device_group (id, group_index, target_id,
+      camera_id, display_id, number,
+      status, memo)
+    values (#{id,jdbcType=INTEGER}, #{groupIndex,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER},
+      #{cameraId,jdbcType=INTEGER}, #{displayId,jdbcType=INTEGER}, #{number,jdbcType=INTEGER},
+      #{status,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.model.Device_Group" >
+    insert into device_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="groupIndex != null" >
+        group_index,
+      </if>
+      <if test="targetId != null" >
+        target_id,
+      </if>
+      <if test="cameraId != null" >
+        camera_id,
+      </if>
+      <if test="displayId != null" >
+        display_id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="groupIndex != null" >
+        #{groupIndex,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null" >
+        #{targetId,jdbcType=INTEGER},
+      </if>
+      <if test="cameraId != null" >
+        #{cameraId,jdbcType=INTEGER},
+      </if>
+      <if test="displayId != null" >
+        #{displayId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.model.Device_Group" >
+    update device_group
+    <set >
+      <if test="groupIndex != null" >
+        group_index = #{groupIndex,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null" >
+        target_id = #{targetId,jdbcType=INTEGER},
+      </if>
+      <if test="cameraId != null" >
+        camera_id = #{cameraId,jdbcType=INTEGER},
+      </if>
+      <if test="displayId != null" >
+        display_id = #{displayId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.model.Device_Group" >
+    update device_group
+    set group_index = #{groupIndex,jdbcType=INTEGER},
+      target_id = #{targetId,jdbcType=INTEGER},
+      camera_id = #{cameraId,jdbcType=INTEGER},
+      display_id = #{displayId,jdbcType=INTEGER},
+      number = #{number,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="countByTargetId" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM device_group
+    WHERE target_id = #{targetId}
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
+
+  <select id="countByCameraId" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM device_group
+    WHERE camera_id = #{cameraId}
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
+
+  <select id="countDisplayId" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM device_group
+    WHERE display_id = #{displayId}
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
+
+  <select id="countByGroupIndex" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM device_group
+    WHERE group_index = #{group_index}
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
+
+  <select id="count" resultType="int">
+    SELECT count(1)
+    FROM device_group
+  </select>
+
+  <select id="getPage" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM device_group
+    ORDER BY group_index ASC
+    LIMIT #{page.offset}, #{page.pageSize}
+  </select>
+
+  <select id="getAll" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM device_group
+    ORDER BY group_index ASC
+  </select>
+
+  <select id="getDeviceGroupByIndex" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM device_group WHERE group_index = #{group_index}
+  </select>
+
+  <select id="getDeviceGroupByCameraIndex" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM device_group WHERE camera_id = #{camera_index}
+  </select>
+
+  <select id="getDeviceGroupByDisplayIndex" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM device_group WHERE display_id = #{display_index}
+  </select>
+
+  <select id="getDeviceGroupByTargetIndex" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM device_group WHERE target_id = #{target_index}
+  </select>
+
+
+</mapper>

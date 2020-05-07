@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.Trainee_GroupMapper" >
+  <resultMap id="BaseResultMap" type="com.mmall.model.Trainee_Group" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="group_number" property="groupNumber" jdbcType="INTEGER" />
+    <result column="trainee_ids" property="traineeIds" jdbcType="VARCHAR" />
+    <result column="per_status" property="perStatus" jdbcType="VARCHAR" />
+    <result column="all_status" property="allStatus" jdbcType="VARCHAR" />
+    <result column="training_id" property="trainingId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, group_number, trainee_ids, per_status, all_status, training_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from trainee_group
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from trainee_group
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.model.Trainee_Group" >
+    insert into trainee_group (id, group_number, trainee_ids,
+      per_status, all_status, training_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{groupNumber,jdbcType=INTEGER}, #{traineeIds,jdbcType=VARCHAR},
+      #{perStatus,jdbcType=VARCHAR}, #{allStatus,jdbcType=VARCHAR}, #{trainingId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.model.Trainee_Group" >
+    insert into trainee_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="groupNumber != null" >
+        group_number,
+      </if>
+      <if test="traineeIds != null" >
+        trainee_ids,
+      </if>
+      <if test="perStatus != null" >
+        per_status,
+      </if>
+      <if test="allStatus != null" >
+        all_status,
+      </if>
+      <if test="trainingId != null" >
+        training_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="groupNumber != null" >
+        #{groupNumber,jdbcType=INTEGER},
+      </if>
+      <if test="traineeIds != null" >
+        #{traineeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="perStatus != null" >
+        #{perStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="allStatus != null" >
+        #{allStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingId != null" >
+        #{trainingId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.model.Trainee_Group" >
+    update trainee_group
+    <set >
+      <if test="groupNumber != null" >
+        group_number = #{groupNumber,jdbcType=INTEGER},
+      </if>
+      <if test="traineeIds != null" >
+        trainee_ids = #{traineeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="perStatus != null" >
+        per_status = #{perStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="allStatus != null" >
+        all_status = #{allStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingId != null" >
+        training_id = #{trainingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.model.Trainee_Group" >
+    update trainee_group
+    set group_number = #{groupNumber,jdbcType=INTEGER},
+      trainee_ids = #{traineeIds,jdbcType=VARCHAR},
+      per_status = #{perStatus,jdbcType=VARCHAR},
+      all_status = #{allStatus,jdbcType=VARCHAR},
+      training_id = #{trainingId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="countByGroupNumber" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM trainee_group
+    WHERE group_number = #{groupNumber}
+    <if test="id != null">
+      AND id != #{id}
+    </if>
+  </select>
+
+  <select id="count" resultType="int">
+    SELECT count(1)
+    FROM trainee_group
+  </select>
+
+  <select id="getPage" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM trainee_group
+    ORDER BY  group_number ASC
+    LIMIT #{page.offset}, #{page.pageSize}
+  </select>
+  <delete id="deleteAll">
+    delete from trainee_group
+  </delete>
+  <select id="getAll" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM trainee_group
+    ORDER BY group_number ASC
+  </select>
+
+  <select id="getTraineeGroupInShooting"  resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM trainee_group where all_status=1
+    ORDER BY group_number ASC LIMIT 1
+  </select>
+
+  <select id="getTraineeGroupNext"  resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM trainee_group where all_status=0
+    ORDER BY group_number ASC LIMIT 1
+  </select>
+
+  <update id="changeShootingTrainee" >
+    update trainee_group
+    set all_status = 1
+    where  all_status = 0 ORDER BY id asc  LIMIT 1
+  </update>
+
+  <update id="changeShootedTrainee" >
+    update trainee_group
+    set all_status = 2
+    where  all_status = 1 ORDER BY id asc  LIMIT 1
+  </update>
+
+</mapper>

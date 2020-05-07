@@ -1,0 +1,13 @@
+系统的消息安方向分为入消息和出消息，server->display: LAUNCH(0),
+                                                  SIGNINBYPASS(1),
+                                                  SIGNINBYFACE(2),//2
+                                                  STARTSHOOTING(3),//3
+                                                  EXIT(4),//4
+                                                  MARK_DATA(5),//5
+                                                  DEVICESTATUS(6);//6
+
+                                  server->camera:LAUNCH(0),
+                                                 DEVICESTATUS(6);//6
+
+                                  server->target:CHANGEPAPER(7)
+                                                DEVICESTATUS(6);//6

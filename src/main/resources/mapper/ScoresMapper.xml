@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.ScoresMapper" >
+  <resultMap id="BaseResultMap" type="com.mmall.model.Scores" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="score_index" property="scoreIndex" jdbcType="INTEGER" />
+    <result column="trainee_id" property="traineeId" jdbcType="INTEGER" />
+    <result column="hitting_time" property="hittingTime" jdbcType="TIMESTAMP" />
+    <result column="px" property="px" jdbcType="REAL" />
+    <result column="py" property="py" jdbcType="REAL" />
+    <result column="mx" property="mx" jdbcType="REAL" />
+    <result column="my" property="my" jdbcType="REAL" />
+    <result column="offset" property="offset" jdbcType="VARCHAR" />
+    <result column="ringNumber" property="ringnumber" jdbcType="REAL" />
+    <result column="mac" property="mac" jdbcType="VARCHAR" />
+    <result column="radius" property="radius" jdbcType="REAL" />
+    <result column="mmOfRadius" property="mmofradius" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, score_index, trainee_id, hitting_time, px, py, mx, my, offset, ringNumber, mac, 
+    radius, mmOfRadius
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from scores
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from scores
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.model.Scores" >
+    insert into scores (id, score_index, trainee_id, 
+      hitting_time, px, py, mx, 
+      my, offset, ringNumber, mac, 
+      radius, mmOfRadius)
+    values (#{id,jdbcType=INTEGER}, #{scoreIndex,jdbcType=INTEGER}, #{traineeId,jdbcType=INTEGER}, 
+      #{hittingTime,jdbcType=TIMESTAMP}, #{px,jdbcType=REAL}, #{py,jdbcType=REAL}, #{mx,jdbcType=REAL}, 
+      #{my,jdbcType=REAL}, #{offset,jdbcType=VARCHAR}, #{ringnumber,jdbcType=REAL}, #{mac,jdbcType=VARCHAR}, 
+      #{radius,jdbcType=REAL}, #{mmofradius,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.model.Scores" >
+    insert into scores
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="scoreIndex != null" >
+        score_index,
+      </if>
+      <if test="traineeId != null" >
+        trainee_id,
+      </if>
+      <if test="hittingTime != null" >
+        hitting_time,
+      </if>
+      <if test="px != null" >
+        px,
+      </if>
+      <if test="py != null" >
+        py,
+      </if>
+      <if test="mx != null" >
+        mx,
+      </if>
+      <if test="my != null" >
+        my,
+      </if>
+      <if test="offset != null" >
+        offset,
+      </if>
+      <if test="ringnumber != null" >
+        ringNumber,
+      </if>
+      <if test="mac != null" >
+        mac,
+      </if>
+      <if test="radius != null" >
+        radius,
+      </if>
+      <if test="mmofradius != null" >
+        mmOfRadius,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="scoreIndex != null" >
+        #{scoreIndex,jdbcType=INTEGER},
+      </if>
+      <if test="traineeId != null" >
+        #{traineeId,jdbcType=INTEGER},
+      </if>
+      <if test="hittingTime != null" >
+        #{hittingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="px != null" >
+        #{px,jdbcType=REAL},
+      </if>
+      <if test="py != null" >
+        #{py,jdbcType=REAL},
+      </if>
+      <if test="mx != null" >
+        #{mx,jdbcType=REAL},
+      </if>
+      <if test="my != null" >
+        #{my,jdbcType=REAL},
+      </if>
+      <if test="offset != null" >
+        #{offset,jdbcType=VARCHAR},
+      </if>
+      <if test="ringnumber != null" >
+        #{ringnumber,jdbcType=REAL},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="radius != null" >
+        #{radius,jdbcType=REAL},
+      </if>
+      <if test="mmofradius != null" >
+        #{mmofradius,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.model.Scores" >
+    update scores
+    <set >
+      <if test="scoreIndex != null" >
+        score_index = #{scoreIndex,jdbcType=INTEGER},
+      </if>
+      <if test="traineeId != null" >
+        trainee_id = #{traineeId,jdbcType=INTEGER},
+      </if>
+      <if test="hittingTime != null" >
+        hitting_time = #{hittingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="px != null" >
+        px = #{px,jdbcType=REAL},
+      </if>
+      <if test="py != null" >
+        py = #{py,jdbcType=REAL},
+      </if>
+      <if test="mx != null" >
+        mx = #{mx,jdbcType=REAL},
+      </if>
+      <if test="my != null" >
+        my = #{my,jdbcType=REAL},
+      </if>
+      <if test="offset != null" >
+        offset = #{offset,jdbcType=VARCHAR},
+      </if>
+      <if test="ringnumber != null" >
+        ringNumber = #{ringnumber,jdbcType=REAL},
+      </if>
+      <if test="mac != null" >
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="radius != null" >
+        radius = #{radius,jdbcType=REAL},
+      </if>
+      <if test="mmofradius != null" >
+        mmOfRadius = #{mmofradius,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.model.Scores" >
+    update scores
+    set score_index = #{scoreIndex,jdbcType=INTEGER},
+      trainee_id = #{traineeId,jdbcType=INTEGER},
+      hitting_time = #{hittingTime,jdbcType=TIMESTAMP},
+      px = #{px,jdbcType=REAL},
+      py = #{py,jdbcType=REAL},
+      mx = #{mx,jdbcType=REAL},
+      my = #{my,jdbcType=REAL},
+      offset = #{offset,jdbcType=VARCHAR},
+      ringNumber = #{ringnumber,jdbcType=REAL},
+      mac = #{mac,jdbcType=VARCHAR},
+      radius = #{radius,jdbcType=REAL},
+      mmOfRadius = #{mmofradius,jdbcType=REAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getByTraineeId" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM Scores
+    where trainee_id = #{traineeId,jdbcType=INTEGER}
+    ORDER BY score_index ASC
+  </select>
+
+  <select id="count" parameterType="map"  resultType="int">
+    SELECT count(1)
+    FROM Scores
+    where trainee_id = #{traineeId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByTraineeId" parameterType="java.lang.Integer" >
+    delete from scores
+    where trainee_id = #{traineeId,jdbcType=INTEGER}
+  </delete>
+</mapper>

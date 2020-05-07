@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.TrainingMapper" >
+  <resultMap id="BaseResultMap" type="com.mmall.model.Training" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="org_dept" property="orgDept" jdbcType="VARCHAR" />
+    <result column="trainee_number" property="traineeNumber" jdbcType="INTEGER" />
+    <result column="dot" property="dot" jdbcType="DATE" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="gun" property="gun" jdbcType="VARCHAR" />
+    <result column="bullet_number" property="bulletNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, org_dept, trainee_number, dot, addr, memo, gun, bullet_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from training
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from training
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.model.Training" >
+    insert into training (id, title, org_dept,
+      trainee_number, dot, addr,
+      memo, gun, bullet_number
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{orgDept,jdbcType=VARCHAR},
+      #{traineeNumber,jdbcType=INTEGER}, #{dot,jdbcType=DATE}, #{addr,jdbcType=VARCHAR},
+      #{memo,jdbcType=VARCHAR}, #{gun,jdbcType=VARCHAR}, #{bulletNumber,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.model.Training" >
+    insert into training
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="orgDept != null" >
+        org_dept,
+      </if>
+      <if test="traineeNumber != null" >
+        trainee_number,
+      </if>
+      <if test="dot != null" >
+        dot,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="gun != null" >
+        gun,
+      </if>
+      <if test="bulletNumber != null" >
+        bullet_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="orgDept != null" >
+        #{orgDept,jdbcType=VARCHAR},
+      </if>
+      <if test="traineeNumber != null" >
+        #{traineeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="dot != null" >
+        #{dot,jdbcType=DATE},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="gun != null" >
+        #{gun,jdbcType=VARCHAR},
+      </if>
+      <if test="bulletNumber != null" >
+        #{bulletNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.model.Training" >
+    update training
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="orgDept != null" >
+        org_dept = #{orgDept,jdbcType=VARCHAR},
+      </if>
+      <if test="traineeNumber != null" >
+        trainee_number = #{traineeNumber,jdbcType=INTEGER},
+      </if>
+      <if test="dot != null" >
+        dot = #{dot,jdbcType=DATE},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="gun != null" >
+        gun = #{gun,jdbcType=VARCHAR},
+      </if>
+      <if test="bulletNumber != null" >
+        bullet_number = #{bulletNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.model.Training" >
+    update training
+    set title = #{title,jdbcType=VARCHAR},
+      org_dept = #{orgDept,jdbcType=VARCHAR},
+      trainee_number = #{traineeNumber,jdbcType=INTEGER},
+      dot = #{dot,jdbcType=DATE},
+      addr = #{addr,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      gun = #{gun,jdbcType=VARCHAR},
+      bullet_number = #{bulletNumber,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="countByName" parameterType="map" resultType="int">
+    SELECT count(1)
+    FROM training
+    WHERE title = #{title}
+  </select>
+
+  <select id="countAll" resultType="int">
+    SELECT count(1)
+    FROM training
+  </select>
+
+  <select id="getPage" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM training
+    ORDER BY id DESC
+    LIMIT #{page.offset}, #{page.pageSize}
+  </select>
+
+</mapper>

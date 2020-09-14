@@ -116,7 +116,9 @@ public class TraineeGroupService {
     public Trainee_Group getTraineeGroupInShooting(){
         return  trainee_groupMapper.getTraineeGroupInShooting();
     }
-
+    public Trainee_Group getTraineeGroupShooted(){
+        return  trainee_groupMapper.getTraineeGroupShooted();
+    }
 
     public Trainee_Group getTraineeGroupNext(){
         return  trainee_groupMapper.getTraineeGroupNext();
@@ -165,5 +167,16 @@ public class TraineeGroupService {
 
     public  int getTraineeGroupCount(){
         return trainee_groupMapper.count();
+    }
+
+    public void startShooting(){//为了避免换靶时，垃圾数据进入先设置一个标识位，所以先借用trainee_group的字段per_status
+        trainee_groupMapper.startShooting();
+    }
+    public void stopShooting(){
+        trainee_groupMapper.stopShooting();
+    }
+    public int getShootingStatus(){
+        return trainee_groupMapper.getShootingStatus();
+
     }
 }

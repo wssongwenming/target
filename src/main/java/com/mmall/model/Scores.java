@@ -9,6 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Scores {
+
     private Integer id;
 
     private Integer scoreIndex;
@@ -24,6 +25,14 @@ public class Scores {
     private Float mx;
 
     private Float my;
+
+    private Float lx;
+
+    private Float ly;
+
+    private Float rx;
+
+    private Float ry;
 
     private String offset;
 
@@ -137,5 +146,37 @@ public class Scores {
 
     public void setMmofradius(Float mmofradius) {
         this.mmofradius = mmofradius;
+    }
+
+    public Float getLx() {
+        return lx;
+    }
+
+    public void setLx(Float lx) {
+        this.lx = lx;
+    }
+
+    public Float getLy() {
+        return ly;
+    }
+
+    public void setLy(Float ly) {
+        this.ly = ly;
+    }
+
+    public Float getRx() {
+        return rx;
+    }
+
+    public void setRx(Float rx) {
+        this.rx = rx;
+    }
+
+    public Float getRy() {
+        return ry;
+    }
+
+    public void setRy(Float ry) {
+        this.ry = ry;
     }
 }

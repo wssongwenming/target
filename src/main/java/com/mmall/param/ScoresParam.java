@@ -24,6 +24,14 @@ public class ScoresParam {
 
     private Float my;
 
+    private Float lx;
+
+    private Float ly;
+
+    private Float rx;
+
+    private Float ry;
+
     private String offset;
 
     private Float ringnumber;

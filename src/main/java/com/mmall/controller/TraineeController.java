@@ -9,9 +9,7 @@ import com.mmall.model.Trainee_Group;
 import com.mmall.param.AclParam;
 import com.mmall.param.TraineeGroupParam;
 import com.mmall.param.TraineeParam;
-import com.mmall.service.DeviceGroupService;
-import com.mmall.service.TraineeGroupService;
-import com.mmall.service.TraineeService;
+import com.mmall.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -23,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.TextMessage;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +42,13 @@ public class TraineeController {
     private TraineeService traineeService;
 
     @Resource
+    private TrainingService trainingService;
+
+    @Resource
     private DeviceGroupService deviceGroupService;
+
+    @Resource
+    private ScoresService scoresService;
 
     @Resource
     private TraineeGroupService traineeGroupService;
@@ -99,6 +104,26 @@ public class TraineeController {
     @ResponseBody
     public JsonData page(@RequestParam("trainingId") int trainingId,PageQuery pageQuery) {
         PageResult<Trainee> result = traineeService.getPageByTrainingId(trainingId, pageQuery);;
+        return JsonData.success(result);
+    }
+
+    @RequestMapping("/scoresByTrainingId.json")
+    @ResponseBody
+    public JsonData scoresPage(@RequestParam("trainingId") int trainingId,PageQuery pageQuery) {
+        PageResult<Trainee> result = traineeService.getPageByTrainingId(trainingId, pageQuery);;
+        int bulletCount=trainingService.getTrainingById(trainingId).getBulletNumber();
+        List<Trainee> traineeList=result.getData();
+        for(Trainee trainee :traineeList){
+            int traineeId=trainee.getId();
+            BigDecimal ringNumbers=scoresService.getScoresSumByTraineeId(traineeId);
+            ringNumbers   =   new   BigDecimal(ringNumbers+"");
+            ringNumbers   =   ringNumbers.setScale(1,BigDecimal.ROUND_HALF_UP);
+            trainee.setRingNumbers(ringNumbers);
+            trainee.setBulletCout(bulletCount);
+            trainee.setAverage(ringNumbers.divide(new BigDecimal(bulletCount+""),1,BigDecimal.ROUND_HALF_UP));
+
+        }
+
         return JsonData.success(result);
     }
     //更新靶位编组调整之前后靶位之间的调整

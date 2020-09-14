@@ -3,6 +3,7 @@ package com.mmall.dao;
 import com.mmall.model.Scores;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ScoresMapper {
@@ -23,5 +24,7 @@ public interface ScoresMapper {
     int count(@Param("traineeId")Integer traineeId);
 
     int deleteByTraineeId(Integer traineeId);
+
+    BigDecimal getScoresSumByTraineeId(Integer traineeId);
 
 }

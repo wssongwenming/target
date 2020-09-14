@@ -376,7 +376,7 @@
                     var rendered = Mustache.render(traineeListTemplate, {
                         traineeList: result.data.data,
                         "showStatus": function() {
-                            return this.status == 0 ? '等候中' : (this.status == 2 ? '打靶中' : (this.status == 3 ? '打靶完毕' : (this.status == 1 ? '正常登陆' : "缺席")));
+                            return this.status == 0 ? '等候中' : (this.status == 1 ? '正常登录' : (this.status == 2 ? '未登陆' : (this.status == 3 ? '打靶中' : (this.status == 4 ? '打靶完毕' : "缺席"))));
                         },
                     });
                     $("#traineeList").html(rendered);

@@ -91,7 +91,14 @@
                     <div id="mytime" style="float:right; line-height:40px;margin-right:5px;font-size:13pt;color:white;margin-top:3px">10:24:46</div>
                 </div>
 				<div class="right-click">
-
+					<div style="float:left">
+					    <div class="click-img">
+						    <a href="#">
+							    <img src="/assets/images/icon-r.png"/>
+						    </a>
+					    </div>
+					    <span>更换靶纸</span>
+                    </div>
 					<div style="float:left">
 						<div class="click-img">
                             <a href="javascript:deviceDetection()">
@@ -123,22 +130,6 @@
 							</a>
 						</div>
 						<span>结束射击</span>
-					</div>
-					<div style="float:left">
-						<div class="click-img">
-						    <a href="javascript:uploadPaper()">
-								<img src="/assets/images/icon-r.png"/>
-							</a>
-						</div>
-						<span>上靶纸</span>
-					</div>
-					<div style="float:left">
-						<div class="click-img">
-						    <a href="javascript:downloadPaper()">
-								<img src="/assets/images/icon-r.png"/>
-							</a>
-						</div>
-						<span>下靶纸</span>
 					</div>
 					<div style="float:left">
 						<div class="click-img">
@@ -259,7 +250,7 @@
                             },
                             "showDisplayStatus":function () {
                                 return this.displayStatus == 0 ? '正常' : (this.displayStatus == 1 ? '异常' : "新添加");
-                                
+
                             },
                             "showCameraStatus":function () {
                                 return this.cameraStatus == 0 ? '正常' : (this.cameraStatus == 1 ? '异常' : "新添加");
@@ -268,7 +259,7 @@
                                 return this.targetStatus == 0 ? '正常' : (this.targetStatus == 1 ? '异常' : "新添加");
                             }
 
-                            
+
 
                         });
                         $("#container").html(rendered);
@@ -421,7 +412,7 @@
                         };
                         myChart.setOption(option);
                         <!--结束显示echart-->
-                       /* showMessage("分组成功", JSON.stringify(result.data)+"", true);*/
+                        /* showMessage("分组成功", JSON.stringify(result.data)+"", true);*/
 
                     } else {
                         showMessage("分组失败", result.msg, false);
@@ -493,40 +484,8 @@
         return ((arg1*m-arg2*m)/m).toFixed(n);
     }
 
-    function uploadPaper(){
-            if(confirm('所有靶位显示已登陆，确定要开始射击吗')==true){
-                $.ajax({
-                    url: "/sys/shootingrange/uploadPaper.json",
-                    contentType: "application/json",
-                    success: function (result) {
-                        if (result.ret) {
-                        }
-                    }
-                });
-            }else{
-            }
 
-    }
-
-    function downloadPaper(){
-        if(confirm('所有靶位显示已登陆，确定要开始射击吗')==true){
-            $.ajax({
-                url: "/sys/shootingrange/downloadPaper.json",
-                contentType: "application/json",
-                success: function (result) {
-                    if (result.ret) {
-                    }
-                }
-            });
-        }else{
-        }
-
-    }
-
-
-
-
-　　//更迭射击人员
+    //更迭射击人员
     function changeShootingTrainee()
     {
 
@@ -541,204 +500,204 @@
             if(info.indexOf("打靶完毕")==-1){
                 finishShooting=false;
             }
-           });
+        });
         if(finishShooting) {
             if(confirm('所有靶位已经完成射击，确定要更迭射击人员吗')==true){
-            $.ajax({
-                url: "/sys/shootingrange/changeShootingTrainee.json",
-                contentType: "application/json",
-                success: function (result) {
-                    if (result.ret) {
-                        var rendered = Mustache.render(shootingRangeDataTemplate, {
-                            traineeShooting_deviceGroup_data_list: result.data.traineeShooting_deviceGroup_data,
-                            nextGroupTrainee: result.data.nextGroupTraineeNames,
-                            currentTrainneeGroup: result.data.currentTrainneeGroupIndex,
-                            sumOfTraineeGroup: result.data.sumOfTraineeGroupCount,
-                            sumOfTrainee: result.data.sumOfTraineeCount,
-                            traineeCountFinish: result.data.traineeCountFinishShooting,
-                            traineeCountNotFinish: result.data.traineeCountNotShooting,
-                            traineeCountAbsent: result.data.traineeCountAbsentShooting,
-                            "showPhoto": function () {
-                                if (this.photo == null) {
-                                    return "/assets/images/icon-person.png";
+                $.ajax({
+                    url: "/sys/shootingrange/changeShootingTrainee.json",
+                    contentType: "application/json",
+                    success: function (result) {
+                        if (result.ret) {
+                            var rendered = Mustache.render(shootingRangeDataTemplate, {
+                                traineeShooting_deviceGroup_data_list: result.data.traineeShooting_deviceGroup_data,
+                                nextGroupTrainee: result.data.nextGroupTraineeNames,
+                                currentTrainneeGroup: result.data.currentTrainneeGroupIndex,
+                                sumOfTraineeGroup: result.data.sumOfTraineeGroupCount,
+                                sumOfTrainee: result.data.sumOfTraineeCount,
+                                traineeCountFinish: result.data.traineeCountFinishShooting,
+                                traineeCountNotFinish: result.data.traineeCountNotShooting,
+                                traineeCountAbsent: result.data.traineeCountAbsentShooting,
+                                "showPhoto": function () {
+                                    if (this.photo == null) {
+                                        return "/assets/images/icon-person.png";
+                                    }
+                                    else {
+                                        return this.photo;
+                                    }
+                                },
+                                "showTraineeStatus": function () {
+                                    if (this.name == null) {
+                                        return null;
+                                    }
+                                    else {
+                                        return this.traineeStatus == 0 ? '：等候打靶' : (this.traineeStatus == 1 ? '：正常登陆' : (this.traineeStatus == 2 ? '：未登陆' : (this.traineeStatus == 3 ? '：打靶中' : (this.traineeStatus == 4 ? '：打靶完毕' : "：缺席"))));
+                                    }
+                                },
+                                "showDisplayStatus": function () {
+                                    return this.displayStatus == 0 ? '未知' : (this.displayStatus == 1 ? '正常' : "异常");
+
+                                },
+                                "showCameraStatus": function () {
+                                    return this.cameraStatus == 0 ? '未知' : (this.cameraStatus == 1 ? '正常' : "异常");
+                                },
+                                "showTargetStatus": function () {
+                                    return this.targetStatus == 0 ? '未知' : (this.targetStatus == 1 ? '正常' : "异常");
                                 }
-                                else {
-                                    return this.photo;
-                                }
-                            },
-                            "showTraineeStatus": function () {
-                                if (this.name == null) {
-                                    return null;
-                                }
-                                else {
-                                    return this.traineeStatus == 0 ? '：等候打靶' : (this.traineeStatus == 1 ? '：正常登陆' : (this.traineeStatus == 2 ? '：未登陆' : (this.traineeStatus == 3 ? '：打靶中' : (this.traineeStatus == 4 ? '：打靶完毕' : "：缺席"))));
-                                }
-                            },
-                            "showDisplayStatus": function () {
-                                return this.displayStatus == 0 ? '未知' : (this.displayStatus == 1 ? '正常' : "异常");
-
-                            },
-                            "showCameraStatus": function () {
-                                return this.cameraStatus == 0 ? '未知' : (this.cameraStatus == 1 ? '正常' : "异常");
-                            },
-                            "showTargetStatus": function () {
-                                return this.targetStatus == 0 ? '未知' : (this.targetStatus == 1 ? '正常' : "异常");
-                            }
 
 
-                        });
-                        $("#container").html(rendered);
-                        setLeftWidth();//动态设置界面宽度，bamian
-                        setTableWidth();
-                        showScores();
+                            });
+                            $("#container").html(rendered);
+                            setLeftWidth();//动态设置界面宽度，bamian
+                            setTableWidth();
+                            showScores();
 
-                        function showScores() {
-                            var diameter = 150;//._img-parent为靶图的父元素为正方形宽高度为150，靶图无论大小都被限制为150px见方大小，
-                            var bullsEyeRadius = 150 / 10;//靶心半径为靶图直径的１０分之一
-                            //var  targetBullsEyeRadius=this.radius;
-                            //var radio=FloatDiv(bullsEyeRadius,targetBullsEyeRadius);
-                            var bullsEye_X = FloatDiv(diameter, 2)//
-                            var bullsEye_Y = FloatMul(diameter, 0.6)//
-                            var deviceGroup_data_list = result.data.traineeShooting_deviceGroup_data//一个靶位数据：同traineeShooting_deviceGroup_data_list
-                            <!--开始把数组中回传数据的px,py即x,y坐标根据两端坐标比例进行变换,在存回去,供下一步解析模板使用-->
-                            for (var m = 0; m < deviceGroup_data_list.length; m++) {
-                                var deviceGroupDataList = deviceGroup_data_list[m];
-                                var shootingScoreList = deviceGroupDataList.shootingScoreList;
-                                if (shootingScoreList != null) {
-                                    for (var n = 0; n < shootingScoreList.length; n++) {
+                            function showScores() {
+                                var diameter = 150;//._img-parent为靶图的父元素为正方形宽高度为150，靶图无论大小都被限制为150px见方大小，
+                                var bullsEyeRadius = 150 / 10;//靶心半径为靶图直径的１０分之一
+                                //var  targetBullsEyeRadius=this.radius;
+                                //var radio=FloatDiv(bullsEyeRadius,targetBullsEyeRadius);
+                                var bullsEye_X = FloatDiv(diameter, 2)//
+                                var bullsEye_Y = FloatMul(diameter, 0.6)//
+                                var deviceGroup_data_list = result.data.traineeShooting_deviceGroup_data//一个靶位数据：同traineeShooting_deviceGroup_data_list
+                                <!--开始把数组中回传数据的px,py即x,y坐标根据两端坐标比例进行变换,在存回去,供下一步解析模板使用-->
+                                for (var m = 0; m < deviceGroup_data_list.length; m++) {
+                                    var deviceGroupDataList = deviceGroup_data_list[m];
+                                    var shootingScoreList = deviceGroupDataList.shootingScoreList;
+                                    if (shootingScoreList != null) {
+                                        for (var n = 0; n < shootingScoreList.length; n++) {
 
-                                        var score = deviceGroupDataList.shootingScoreList[n];
-                                        var radius = score.radius;//传回来的显靶终端靶心半径以px为单位
-                                        // var radius_mm=score.mmOfRadius;////传回来的显靶终端靶心半径以mm为单位,，暂时没有用因为服务器端用的的以px为单位
-                                        var px = score.px;//取得回传的x
-                                        var py = score.py;//取得回传的y
-                                        var radio = FloatDiv(bullsEyeRadius, radius);
-                                        var X = bullsEye_X + px * radio;//返回的x以左为负
-                                        var Y = bullsEye_Y + py * radio;//返回的y以下为正
-                                        deviceGroup_data_list[m].shootingScoreList[n].px = X-1.5;
-                                        deviceGroup_data_list[m].shootingScoreList[n].py = Y-1.5;
+                                            var score = deviceGroupDataList.shootingScoreList[n];
+                                            var radius = score.radius;//传回来的显靶终端靶心半径以px为单位
+                                            // var radius_mm=score.mmOfRadius;////传回来的显靶终端靶心半径以mm为单位,，暂时没有用因为服务器端用的的以px为单位
+                                            var px = score.px;//取得回传的x
+                                            var py = score.py;//取得回传的y
+                                            var radio = FloatDiv(bullsEyeRadius, radius);
+                                            var X = bullsEye_X + px * radio;//返回的x以左为负
+                                            var Y = bullsEye_Y + py * radio;//返回的y以下为正
+                                            deviceGroup_data_list[m].shootingScoreList[n].px = X-1.5;
+                                            deviceGroup_data_list[m].shootingScoreList[n].py = Y-1.5;
+                                        }
                                     }
                                 }
+                                <!--结束把数组中回传数据的px,py即x,y坐标根据两端坐标比例进行变换,在存回去,供下一步解析模板使用-->
+
+                                for (var i = 0; i < deviceGroup_data_list.length; i++) {
+                                    var rendered = Mustache.render(scoreTemplate, {scoreList: deviceGroup_data_list[i].shootingScoreList});
+                                    $("#_goals" + deviceGroup_data_list[i].deviceGroupIndex).append(rendered);//注意这里是append,不是html(html是覆盖,append是添加)
+                                }
                             }
-                            <!--结束把数组中回传数据的px,py即x,y坐标根据两端坐标比例进行变换,在存回去,供下一步解析模板使用-->
 
-                            for (var i = 0; i < deviceGroup_data_list.length; i++) {
-                                var rendered = Mustache.render(scoreTemplate, {scoreList: deviceGroup_data_list[i].shootingScoreList});
-                                $("#_goals" + deviceGroup_data_list[i].deviceGroupIndex).append(rendered);//注意这里是append,不是html(html是覆盖,append是添加)
+                            <!--开始显示时间栏右侧的时间日期和星期几-->
+                            setInterval(updateTime, 1000);
+                            updateTime();
+
+                            function updateTime() {
+                                var cd = new Date();
+                                var myweek = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                                var mytime = zeroPadding(cd.getHours(), 2) + ':' + zeroPadding(cd.getMinutes(), 2) + ':' + zeroPadding(cd.getSeconds(), 2);
+                                var mydate = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth() + 1, 2) + '-' + zeroPadding(cd.getDate(), 2);
+                                var myday = cd.getDay();
+                                var myweekday = myweek[myday];
+                                $("#mytime").html(mytime);
+                                $("#mydate").html(mydate);
+                                $("#myweekday").html(myweekday);
+                            };
+                            <!--结束显示时间栏右侧的时间日期和星期几-->
+                            <!--开始显示时钟-->
+                            var hourDom = document.getElementById('hour');
+                            var minDom = document.getElementById('min');
+                            var secDom = document.getElementById('sec');
+                            var cricle = document.getElementById('mycircle');
+                            //创建表盘，ul宽高为wrap宽高，以wrap中心点为变换基点，动态分配6°的li
+                            for (var i = 0; i < 60; i++) {
+                                var li = document.createElement('li');
+                                cricle.appendChild(li);
+                                if (i % 5 == 0) {
+                                    li.style.height = "6px";
+                                    li.style.width = "1px";
+                                }
+                                li.style.transform = 'rotate(' + i * 6 + 'deg)';
                             }
-                        }
 
-                        <!--开始显示时间栏右侧的时间日期和星期几-->
-                        setInterval(updateTime, 1000);
-                        updateTime();
+                            setInterval(function () {
+                                var date = new Date();
+                                var hour = date.getHours();
+                                var min = date.getMinutes();
+                                var sec = date.getSeconds();
+                                min += sec / 60;
+                                hour += min / 60;
 
-                        function updateTime() {
-                            var cd = new Date();
-                            var myweek = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-                            var mytime = zeroPadding(cd.getHours(), 2) + ':' + zeroPadding(cd.getMinutes(), 2) + ':' + zeroPadding(cd.getSeconds(), 2);
-                            var mydate = zeroPadding(cd.getFullYear(), 4) + '-' + zeroPadding(cd.getMonth() + 1, 2) + '-' + zeroPadding(cd.getDate(), 2);
-                            var myday = cd.getDay();
-                            var myweekday = myweek[myday];
-                            $("#mytime").html(mytime);
-                            $("#mydate").html(mydate);
-                            $("#myweekday").html(myweekday);
-                        };
-                        <!--结束显示时间栏右侧的时间日期和星期几-->
-                        <!--开始显示时钟-->
-                        var hourDom = document.getElementById('hour');
-                        var minDom = document.getElementById('min');
-                        var secDom = document.getElementById('sec');
-                        var cricle = document.getElementById('mycircle');
-                        //创建表盘，ul宽高为wrap宽高，以wrap中心点为变换基点，动态分配6°的li
-                        for (var i = 0; i < 60; i++) {
-                            var li = document.createElement('li');
-                            cricle.appendChild(li);
-                            if (i % 5 == 0) {
-                                li.style.height = "6px";
-                                li.style.width = "1px";
-                            }
-                            li.style.transform = 'rotate(' + i * 6 + 'deg)';
-                        }
+                                //当前时间*每个单位时间走的角度=指针指向
+                                hourDom.style.transform = 'rotate(' + hour * 30 + 'deg)';
+                                minDom.style.transform = 'rotate(' + min * 6 + 'deg)';
+                                secDom.style.transform = 'rotate(' + sec * 6 + 'deg)';
+                            }, 1000);
+                            <!--结束显示时钟-->
 
-                        setInterval(function () {
-                            var date = new Date();
-                            var hour = date.getHours();
-                            var min = date.getMinutes();
-                            var sec = date.getSeconds();
-                            min += sec / 60;
-                            hour += min / 60;
-
-                            //当前时间*每个单位时间走的角度=指针指向
-                            hourDom.style.transform = 'rotate(' + hour * 30 + 'deg)';
-                            minDom.style.transform = 'rotate(' + min * 6 + 'deg)';
-                            secDom.style.transform = 'rotate(' + sec * 6 + 'deg)';
-                        }, 1000);
-                        <!--结束显示时钟-->
-
-                        <!--开始显示echart-->
-                        var dom = document.getElementById("rate");
-                        var myChart = echarts.init(dom);
-                        option = {
-                            tooltip: {
-                                trigger: 'item',
-                                formatter: '{a} <br/>{b}: {c} ({d}%)'
-                            },
-                            itemStyle: {
-                                normal: {
-                                    //自定义颜色
-                                    color: function (params) {
+                            <!--开始显示echart-->
+                            var dom = document.getElementById("rate");
+                            var myChart = echarts.init(dom);
+                            option = {
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                                },
+                                itemStyle: {
+                                    normal: {
                                         //自定义颜色
-                                        var colorList = [
-                                            '#41C7DB', '#DDDDDD'
-                                        ];
-                                        return colorList[params.dataIndex];
+                                        color: function (params) {
+                                            //自定义颜色
+                                            var colorList = [
+                                                '#41C7DB', '#DDDDDD'
+                                            ];
+                                            return colorList[params.dataIndex];
+                                        }
                                     }
-                                }
-                            },
-                            series: [
-                                {
-                                    name: '访问来源',
-                                    type: 'pie',
-                                    radius: ['80%', '100%'],
-                                    avoidLabelOverlap: false,
-                                    label: {
-                                        normal: {
-                                            show: true,
-                                            position: 'center',
-                                            formatter: function (data) { // 设置圆饼图中间文字排版
-                                                if (data.name == "打靶完毕") {
-                                                    return data.percent + "%";
+                                },
+                                series: [
+                                    {
+                                        name: '访问来源',
+                                        type: 'pie',
+                                        radius: ['80%', '100%'],
+                                        avoidLabelOverlap: false,
+                                        label: {
+                                            normal: {
+                                                show: true,
+                                                position: 'center',
+                                                formatter: function (data) { // 设置圆饼图中间文字排版
+                                                    if (data.name == "打靶完毕") {
+                                                        return data.percent + "%";
+                                                    }
+                                                    return "";
                                                 }
-                                                return "";
+                                            },
+                                            emphasis: {
+                                                show: true,
+                                                textStyle: {
+                                                    fontSize: '15',
+                                                    fontWeight: 'bold'
+                                                }
                                             }
                                         },
-                                        emphasis: {
-                                            show: true,
-                                            textStyle: {
-                                                fontSize: '15',
-                                                fontWeight: 'bold'
+                                        labelLine: {
+                                            normal: {
+                                                show: false
                                             }
-                                        }
-                                    },
-                                    labelLine: {
-                                        normal: {
-                                            show: false
-                                        }
-                                    },
-                                    data: [
-                                        {value: result.data.traineeCountFinishShooting, name: '打靶完毕'},
-                                        {value: result.data.traineeCountNotShooting, name: '未打靶'}
-                                    ]
-                                }
-                            ]
-                        };
-                        myChart.setOption(option);
-                        <!--结束显示echart-->
-                    } else {
-                        showMessage("失败", result.msg, false);
+                                        },
+                                        data: [
+                                            {value: result.data.traineeCountFinishShooting, name: '打靶完毕'},
+                                            {value: result.data.traineeCountNotShooting, name: '未打靶'}
+                                        ]
+                                    }
+                                ]
+                            };
+                            myChart.setOption(option);
+                            <!--结束显示echart-->
+                        } else {
+                            showMessage("失败", result.msg, false);
+                        }
                     }
-                }
-            });
+                });
 
             }else {
 
@@ -945,7 +904,7 @@
 
             }
 
-            }
+        }
     }
     //开始射击
     function startShooting(){
@@ -987,36 +946,6 @@
         }
     }
 
-
-    function uploadPaper(){
-        $.ajax({
-            url: "/sys/shootingrange/uploadPaper.json",
-            contentType: "application/json",
-            success: function (result) {
-                if (result.ret) {
-
-                } else {
-
-                }
-            }
-        });
-
-    }
-
-    function downloadPaper(){
-        $.ajax({
-            url: "/sys/shootingrange/downloadPaper.json",
-            contentType: "application/json",
-            success: function (result) {
-                if (result.ret) {
-
-                } else {
-
-                }
-            }
-        });
-
-    }
 
     //射击
     function endShooting(){
@@ -1117,7 +1046,7 @@
                         break;
 
                 }
-            break;
+                break;
             case 1:
                 var radius=json.radius;//传回来的显靶终端靶心半径以px为单位
                 var mm_radius=json.mmOfRadius;//传回来的显靶终端靶心半径以mm为单位,暂时不用
@@ -1148,14 +1077,14 @@
                 $("#_goals" + deviceGroupIndex).find('div').remove();//去掉以前显示的靶环,
                 $("#_goals" + deviceGroupIndex).append(renderedScore);//
                 break;
-/*          {
-                "code": 1,
-                "data": {
-                "targetIndex":1
-                "deviceType": "1",
-                "deviceStatus": 50
-           　　},
-            　}*/
+            /*          {
+                            "code": 1,
+                            "data": {
+                            "targetIndex":1
+                            "deviceType": "1",
+                            "deviceStatus": 50
+                       　　},
+                        　}*/
             case 2://设备状态，信息包括三部都为2，：deviceType=0:靶机；1：采集；2：显靶，deviceStatus：具体判断显靶只需要０，１正常，异常状态，靶机可能会多一点：上纸张异常，退纸张异常，或其他
                 var deviceType=json.data.deviceType;
                 var deviceStatus=json.data.deviceStatus;
@@ -1205,25 +1134,25 @@
     function onError() {}
     function onClose() {}
 
-/*    function doSendUser() {
-        alert(websocket.readyState + ":" + websocket.OPEN);
-        if (websocket.readyState == websocket.OPEN) {
-            var msg = document.getElementById("inputMsg").value;
-            websocket.send(msg);//调用后台handleTextMessage方法
-            alert("发送成功!");
-        } else {
-            alert("连接失败!");
-        }
-    }*/
-/*    function doSendUsers() {
-        if (websocket.readyState == websocket.OPEN) {
-            var msg = document.getElementById("inputMsg").value;
-            websocket.send("#everyone#"+msg);//调用后台handleTextMessage方法
-            alert("发送成功!");
-        } else {
-            alert("连接失败!");
-        }
-    }*/
+    /*    function doSendUser() {
+            alert(websocket.readyState + ":" + websocket.OPEN);
+            if (websocket.readyState == websocket.OPEN) {
+                var msg = document.getElementById("inputMsg").value;
+                websocket.send(msg);//调用后台handleTextMessage方法
+                alert("发送成功!");
+            } else {
+                alert("连接失败!");
+            }
+        }*/
+    /*    function doSendUsers() {
+            if (websocket.readyState == websocket.OPEN) {
+                var msg = document.getElementById("inputMsg").value;
+                websocket.send("#everyone#"+msg);//调用后台handleTextMessage方法
+                alert("发送成功!");
+            } else {
+                alert("连接失败!");
+            }
+        }*/
     window.close=function()
     {
         websocket.onclose();

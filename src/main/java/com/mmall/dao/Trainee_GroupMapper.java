@@ -27,7 +27,13 @@ public interface Trainee_GroupMapper {
     List<Trainee_Group> getPage(@Param("page") PageQuery page);
     List<Trainee_Group> getAll();
     Trainee_Group getTraineeGroupInShooting();
+    Trainee_Group getTraineeGroupShooted();
     Trainee_Group getTraineeGroupNext();
     int changeShootingTrainee();
     int changeShootedTrainee();
+
+    void startShooting();//修改per_status状态为0
+    void stopShooting();//修改per_status状态为1
+    int getShootingStatus();
+
 }

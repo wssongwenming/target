@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +31,14 @@ public class Trainee {
     private String photo;
 
     private Integer groupIndex;
+
+    private BigDecimal ringNumbers;
+
+    private String grade;
+
+    private Integer bulletCout;
+
+    private BigDecimal average;
 
     private Integer targetIndex;
 
@@ -118,5 +128,37 @@ public class Trainee {
 
     public void setTargetIndex(Integer targetIndex) {
         this.targetIndex = targetIndex;
+    }
+
+    public BigDecimal getRingNumbers() {
+        return ringNumbers;
+    }
+
+    public void setRingNumbers(BigDecimal ringNumbers) {
+        this.ringNumbers = ringNumbers;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public Integer getBulletCout() {
+        return bulletCout;
+    }
+
+    public void setBulletCout(Integer bulletCout) {
+        this.bulletCout = bulletCout;
+    }
+
+    public BigDecimal getAverage() {
+        return average;
+    }
+
+    public void setAverage(BigDecimal average) {
+        this.average = average;
     }
 }

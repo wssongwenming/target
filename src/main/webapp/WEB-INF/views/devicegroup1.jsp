@@ -273,7 +273,6 @@
                                 target_index_array.push(target_index);
                             });
                         }
-
                         $.map(deviceGroupMap,function(devicegroup,key){
                             target_index_array.remove(devicegroup.targetId);
                         });

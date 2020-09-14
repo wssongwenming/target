@@ -109,7 +109,7 @@
         memo = #{memo,jdbcType=VARCHAR},
       </if>
       <if test="device_index != null" >
-        index = #{device_index,jdbcType=INTEGER},
+        device_index = #{device_index,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

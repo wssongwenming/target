@@ -91,14 +91,7 @@
                     <div id="mytime" style="float:right; line-height:40px;margin-right:5px;font-size:13pt;color:white;margin-top:3px">10:24:46</div>
                 </div>
 				<div class="right-click">
-					<div style="float:left">
-					    <div class="click-img">
-						    <a href="#">
-							    <img src="/assets/images/icon-r.png"/>
-						    </a>
-					    </div>
-					    <span>更换靶纸</span>
-                    </div>
+
 					<div style="float:left">
 						<div class="click-img">
                             <a href="javascript:deviceDetection()">
@@ -125,6 +118,30 @@
 					</div>
 					<div style="float:left">
 						<div class="click-img">
+						    <a href="javascript:endShooting()">
+								<img src="/assets/images/icon-r.png"/>
+							</a>
+						</div>
+						<span>结束射击</span>
+					</div>
+					<div style="float:left">
+						<div class="click-img">
+						    <a href="javascript:uploadPaper()">
+								<img src="/assets/images/icon-r.png"/>
+							</a>
+						</div>
+						<span>装载靶纸</span>
+					</div>
+					<div style="float:left">
+						<div class="click-img">
+						    <a href="javascript:downloadPaper()">
+								<img src="/assets/images/icon-r.png"/>
+							</a>
+						</div>
+						<span>卸载靶纸</span>
+					</div>
+					<div style="float:left">
+						<div class="click-img">
 						    <a href="/sys/trainee/traineegroupquery.page">
 								<img src="/assets/images/icon-r.png"/>
 							</a>
@@ -142,7 +159,7 @@
 					</div>
 					<div style="clear:both;"></div>
 				</div>
-                <div style="width:200px;height:106px;">
+                <div style="width:200px;height:80px;">
                 </div>
                 <div style="margin-left:5px;">下一组:</div>
                 <div style="margin-left:5px;" class="next-group">{{nextGroupTrainee}}</div>
@@ -282,7 +299,7 @@
                                         var py = score.py;//取得回传的y
                                         var radio = FloatDiv(bullsEyeRadius, radius);
                                         var X = bullsEye_X + px * radio;//返回的x以左为负数
-                                        var Y = bullsEye_Y - py * radio;//返回的y以上为正
+                                        var Y = bullsEye_Y + py * radio;//返回的y以下为正
                                         deviceGroup_data_list[m].shootingScoreList[n].px = X-1.5;
                                         deviceGroup_data_list[m].shootingScoreList[n].py = Y-1.5;
                                     }
@@ -476,6 +493,38 @@
         return ((arg1*m-arg2*m)/m).toFixed(n);
     }
 
+    function uploadPaper(){
+            if(confirm('所有靶位显示已登陆，确定要开始射击吗')==true){
+                $.ajax({
+                    url: "/sys/shootingrange/uploadPaper.json",
+                    contentType: "application/json",
+                    success: function (result) {
+                        if (result.ret) {
+                        }
+                    }
+                });
+            }else{
+            }
+
+    }
+
+    function downloadPaper(){
+        if(confirm('所有靶位显示已登陆，确定要开始射击吗')==true){
+            $.ajax({
+                url: "/sys/shootingrange/downloadPaper.json",
+                contentType: "application/json",
+                success: function (result) {
+                    if (result.ret) {
+                    }
+                }
+            });
+        }else{
+        }
+
+    }
+
+
+
 
 　　//更迭射击人员
     function changeShootingTrainee()
@@ -565,7 +614,7 @@
                                         var py = score.py;//取得回传的y
                                         var radio = FloatDiv(bullsEyeRadius, radius);
                                         var X = bullsEye_X + px * radio;//返回的x以左为负
-                                        var Y = bullsEye_Y - py * radio;//返回的y以上为正
+                                        var Y = bullsEye_Y + py * radio;//返回的y以下为正
                                         deviceGroup_data_list[m].shootingScoreList[n].px = X-1.5;
                                         deviceGroup_data_list[m].shootingScoreList[n].py = Y-1.5;
                                     }
@@ -690,6 +739,7 @@
                     }
                 }
             });
+
             }else {
 
             }
@@ -766,7 +816,7 @@
                                             var py = score.py;//取得回传的y
                                             var radio = FloatDiv(bullsEyeRadius, radius);
                                             var X = bullsEye_X + px * radio;//返回的x以左为负数
-                                            var Y = bullsEye_Y - py * radio;//返回的y以上为正
+                                            var Y = bullsEye_Y + py * radio;//返回的y以下为正
                                             deviceGroup_data_list[m].shootingScoreList[n].px = X-1.5;
                                             deviceGroup_data_list[m].shootingScoreList[n].py = Y-1.5;
                                         }
@@ -938,6 +988,74 @@
     }
 
 
+    function uploadPaper(){
+        $.ajax({
+            url: "/sys/shootingrange/uploadPaper.json",
+            contentType: "application/json",
+            success: function (result) {
+                if (result.ret) {
+
+                } else {
+
+                }
+            }
+        });
+
+    }
+
+    function downloadPaper(){
+        $.ajax({
+            url: "/sys/shootingrange/downloadPaper.json",
+            contentType: "application/json",
+            success: function (result) {
+                if (result.ret) {
+
+                } else {
+
+                }
+            }
+        });
+
+    }
+
+    //射击
+    function endShooting(){
+        var shootingRangeDataTemplate = $('#shootingRangeDataTemplate').html();
+        Mustache.parse(shootingRangeDataTemplate);
+        var scoreTemplate = $('#scoreTemplate').html();
+        Mustache.parse(scoreTemplate);
+        var finishShooting=true;
+        //在更迭射击人员前要判断一下是否还有未完成射击的人员，如有则须确定是否继续
+        $("._info-list").each(function(){
+            var info = $(this).find("span").text();
+            if(info.indexOf("打靶完毕")==-1){
+                finishShooting=false;
+            }
+        });
+        //所有人员已经打靶结束不需要任何操作
+        if(finishShooting){}
+        else{
+            if(confirm('有靶位非' +
+                '“打靶完毕”状态，确定要借宿打靶吗')==true){
+                $.ajax({
+                    url: "/sys/shootingrange/endShootingTrainee.json",
+                    contentType: "application/json",
+                    success: function (result) {
+                        if (result.ret) {
+
+                        } else {
+
+                        }
+                    }
+                });
+            }else {
+
+            }
+        }
+
+    }
+
+
     function sendTestData(){
         $.ajax({
             url: "/rabbitmq/senddata",
@@ -1015,8 +1133,8 @@
                     var px = score.px;//取得回传的x
                     var py = score.py;//取得回传的y
                     var radio = FloatDiv(bullsEyeRadius, radius);
-                    var X = bullsEye_X + px * radio;//返回的x以左为负数
-                    var Y = bullsEye_Y - py * radio;//返回的y以上为正
+                    var X = bullsEye_X + px * radio;//返回的x以右为正
+                    var Y = bullsEye_Y + py * radio;//返回的y以下为正
                     scoreList[n].px = X-1.5;//显示靶孔的半径为3，定位的时候是以小孔的左上角坐标定的，所以要在
                     // 变换完的坐标（这时，以左上角为坐标原点，向右，向下为正），减去小孔半径
                     scoreList[n].py = Y-1.5;

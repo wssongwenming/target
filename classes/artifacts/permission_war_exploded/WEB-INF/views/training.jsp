@@ -226,18 +226,20 @@
             var pageSize = $("#pageSize").val();
             var url = "/sys/training/page.json";
             var pageNo = $("#trainingPage .pageNo").val() || 1;
+            jQuery.support.cors = true;
             $.ajax({
                 url : url,
+                crossDomain: true == !(document.all), //这句是关键
                 data: {
                     pageSize: pageSize,
                     pageNo: pageNo
                 },
                 success: function (result) {
                     renderTrainingListAndPage(result, url);
+
                 }
             })
         }
-
         function renderTrainingListAndPage(result, url) {
             if (result.ret) {
                 if (result.data.total > 0){

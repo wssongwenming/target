@@ -11,6 +11,7 @@ import com.mmall.util.BeanValidator;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ScoresService {
 
         BeanValidator.check(param);
         Scores scores = Scores.builder().hittingTime(param.getHittingTime()).mac(param.getMac()).mmofradius(param.getMmofradius())
-                .mx(param.getMx()).my(param.getMy()).offset(param.getOffset()).px(param.getPx()).py(param.getPy())
+                .mx(param.getMx()).my(param.getMy()).offset(param.getOffset()).px(param.getPx()).py(param.getPy()).lx(param.getLx()).ly(param.getLy()).rx(param.getRx()).ry(param.getRy())
                 .radius(param.getRadius()).ringnumber(param.getRingnumber()).scoreIndex(param.getScoreIndex()).traineeId(param.getTraineeId())
                 .traineeId(param.getTraineeId()).build();
         scoresMapper.insertSelective(scores);
@@ -40,5 +41,9 @@ public class ScoresService {
 
     public int deleteByTraineeId(Integer traineeId){
         return scoresMapper.deleteByTraineeId(traineeId);
+    }
+
+    public BigDecimal getScoresSumByTraineeId(Integer traineeId){
+        return scoresMapper.getScoresSumByTraineeId(traineeId);
     }
 }

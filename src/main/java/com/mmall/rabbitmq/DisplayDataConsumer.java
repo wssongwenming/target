@@ -68,7 +68,6 @@ public class DisplayDataConsumer implements ChannelAwareMessageListener {
                 long delieverTag=message.getMessageProperties().getDeliveryTag();
                 channel.basicAck(delieverTag,false);//TODO:应该为false
             }else if(CODE==1){
-
                 int displayId=messageJson.getIntValue("deviceId");
                 int status=messageJson.getIntValue("device_status");
                 int deviceGroupIndex=messageJson.getIntValue("target_index");
@@ -77,7 +76,6 @@ public class DisplayDataConsumer implements ChannelAwareMessageListener {
                 channel.basicAck(delieverTag,false);
                 //更改服务器端的显示状态
                 Display display=displayService.getDisplayById(displayId);
-
                 DisplayParam displayParam=new DisplayParam();
                 displayParam.setId(display.getId());
                 displayParam.setDevice_index(display.getDevice_index());
@@ -88,7 +86,6 @@ public class DisplayDataConsumer implements ChannelAwareMessageListener {
                 displayParam.setName(display.getName());
                 displayParam.setNumber(display.getNumber());
                 displayService.update(displayParam);
-
                 JSONObject displayJson=new JSONObject();
                 JSONObject data=new JSONObject();
                 displayJson.put("code",2);//code=0用户的状态数据（未登陆，已登陆．正在射击）,(code=1打靶数据),code=2：代表设备的状态
@@ -97,7 +94,6 @@ public class DisplayDataConsumer implements ChannelAwareMessageListener {
                 data.put("deviceType", DeviceType.DISPLAY);
                 displayJson.put("data",data);
                 infoHandler().sendMessageToUsers( new TextMessage(displayJson.toJSONString())) ;
-
             }
         }catch (Exception e) {
             // TODO Auto-generated catch block

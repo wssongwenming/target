@@ -138,6 +138,12 @@
     ORDER BY group_number ASC LIMIT 1
   </select>
 
+  <select id="getTraineeGroupShooted"  resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM trainee_group where all_status=2
+    ORDER BY group_number ASC LIMIT 1
+  </select>
+
   <select id="getTraineeGroupNext"  resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List" />
     FROM trainee_group where all_status=0
@@ -155,5 +161,19 @@
     set all_status = 2
     where  all_status = 1 ORDER BY id asc  LIMIT 1
   </update>
+
+  <update id="startShooting" >
+    update trainee_group
+    set per_status = 0
+  </update>
+  <update id="stopShooting" >
+    update trainee_group
+    set per_status = 1
+  </update>
+
+  <select id="getShootingStatus" resultType="int">
+    SELECT per_status
+    FROM trainee_group LIMIT 1
+  </select>
 
 </mapper>

@@ -210,7 +210,6 @@
                                 device_index_array.remove(device_index);
                             });
                         }
-
                         $(device_index_array).each(function (i, device_index) {
 
                             deviceIndexOptionStr += Mustache.render("<option value='{{id}}'>{{id}}</option>",{id: device_index});

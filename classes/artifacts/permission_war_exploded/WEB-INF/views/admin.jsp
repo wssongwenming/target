@@ -5,29 +5,30 @@
 <html lang="en">
 <head>
     <jsp:include page="/common/backend_common.jsp"/>
+
 </head>
 
 <body class="no-skin">
-<div id="navbar" class="navbar navbar-default">
+<div id="navbar" class="navbar navbar-default"  style="background: url(/assets/images/banner.png);height: 60px;">
     <div class="navbar-container">
-        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
-            <span class="sr-only">Toggle sidebar</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
+        <%--<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">--%>
+            <%--<span class="sr-only">Toggle sidebar</span>--%>
+            <%--<span class="icon-bar"></span>--%>
+            <%--<span class="icon-bar"></span>--%>
+            <%--<span class="icon-bar"></span>--%>
+        <%--</button>--%>
 
-        <div class="navbar-header pull-left">
-            <a href="/admin/page.do" class="navbar-brand">
-                <small>
-                    <i class="fa fa-leaf"></i>
-                    管理员控制台
-                </small>
-            </a>
-        </div>
+        <%--<div class="navbar-header pull-left">--%>
+            <%--<a href="/admin/page.do" class="navbar-brand">--%>
+                <%--<small>--%>
+                    <%--<i class="fa fa-leaf"></i>--%>
+                    <%--管理员控制台--%>
+                <%--</small>--%>
+            <%--</a>--%>
+        <%--</div>--%>
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
-                <li class="light-blue dropdown-modal">
+                <li class="dropdown-modal">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <span class="user-info">
                             <small>欢迎,</small>
@@ -57,9 +58,7 @@
                 </li>
             </ul>
         </div>
-
     </div>
-
 </div>
 
 <div class="main-container" id="main-container">
@@ -214,6 +213,23 @@
                         <a class="popstyle" href="/sys/shootingrange/enter.page" target="_blank">
                             <i class="menu-icon fa fa-caret-right"></i>
                             进入靶场
+                        </a>
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-desktop"></i>
+                    <span class="menu-text">训(考)总结</span>
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                    <li class="">
+                        <a class="popstyle" href="/sys/shootingrange/scorequery.page" target="_blank">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            训练(考核)成绩统计查询
                         </a>
                         <b class="arrow"></b>
                     </li>

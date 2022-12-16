@@ -10,7 +10,7 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <springframework.version>4.3.10.RELEASE</springframework.version>
+    <springframework.version>5.2.20.RELEASE</springframework.version>
   </properties>
 
   <dependencies>
@@ -234,7 +234,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>4.1.5.RELEASE</version>
+      <version>5.2.20.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>jstl</groupId>
